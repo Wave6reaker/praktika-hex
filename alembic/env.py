@@ -5,20 +5,24 @@ from sqlalchemy import engine_from_config, pool
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncConnection
 from alembic import context
 
+# Добавляем путь к проекту для корректного импорта
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
+# Импортируем зависимости
 from app.config import settings
-from app.db.database import Base
+from app.db.database import Base  # Импорт Base
 from app.models.user import User
 from app.models.room import Room
 from app.models.booking import Booking
 
+# Настраиваем конфигурацию
 config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
+# Устанавливаем URL базы данных
 config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
-target_metadata = Base.metadata
+target_metadata = Base.metadata  # Используем Base.metadata после импорта
 
 def run_migrations_offline():
     """Run migrations in 'offline' mode."""

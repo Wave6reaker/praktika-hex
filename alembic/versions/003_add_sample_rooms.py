@@ -2,20 +2,18 @@
 
 Revision ID: 003
 Revises: 002
-Create Date: 2023-05-10 13:00:00.000000
-
+Create Date: 2023-05-10 13:00:00
 """
+
+revision = "003"
+down_revision = "002"
+branch_labels = None
+depends_on = None
+
 from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.sql import table, column
 from sqlalchemy import String, Integer, Float, Boolean, Text
-
-# revision identifiers, used by Alembic.
-revision = '003'
-down_revision = '002'
-branch_labels = None
-depends_on = None
-
 
 def upgrade():
     # Создаем таблицу для вставки данных
@@ -92,7 +90,6 @@ def upgrade():
             }
         ]
     )
-
 
 def downgrade():
     # Удаляем примеры комнат
