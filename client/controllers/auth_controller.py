@@ -7,8 +7,7 @@ class AuthController:
 
     def login(self, username, password):
         """Вход пользователя"""
-        # Try with the correct endpoint path
-        response = self.api_client.post("/auth/login", data={  # Removed /api prefix
+        response = self.api_client.post("/api/auth/login", data={
             "username": username,
             "password": password
         })
@@ -20,7 +19,7 @@ class AuthController:
         self.api_client.set_token(token)
 
         # Получаем данные пользователя
-        user_data = self.api_client.get("/users/me")  # Removed /api prefix
+        user_data = self.api_client.get("/api/users/me")
 
         # Если всё успешно — уведомляем главное окно
         if self.parent:
@@ -36,8 +35,7 @@ class AuthController:
             "phone": phone
         }
 
-        # Try with the correct endpoint path
-        response = self.api_client.post("/auth/register", data=payload)  # Removed /api prefix
+        response = self.api_client.post("/api/auth/register", data=payload)
         if not response:
             raise Exception("Ошибка регистрации")
 
@@ -47,8 +45,7 @@ class AuthController:
     def validate_token(self, success_callback, error_callback):
         """Проверка токена"""
         try:
-            # Try with the correct endpoint path
-            self.api_client.get("/users/me")  # Removed /api prefix
+            self.api_client.get("/api/users/me")
             success_callback()
         except Exception:
             error_callback()
