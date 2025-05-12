@@ -27,11 +27,11 @@ class CoworkingApp(QMainWindow):
         self.settings = QSettings("CoworkingApp", "CoworkingManagement")
         
         # Инициализация API клиента
-        base_url = os.environ.get("API_URL", "http://localhost:8000")
+        base_url = os.environ.get("API_URL", "http://127.0.0.1:8888")
         self.api_client = ApiClient(base_url)
         
         # Инициализация контроллеров
-        self.auth_controller = AuthController(self.api_client)
+        self.auth_controller = AuthController(self.api_client, self)
         self.room_controller = RoomController(self.api_client)
         self.booking_controller = BookingController(self.api_client)
         
