@@ -1,24 +1,25 @@
 import os
-from pydantic import Field, BaseModel
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
-class Settings(BaseModel):
+class Settings(BaseSettings):
     """Настройки приложения"""
     # Настройки базы данных
-    DATABASE_URL: str = Field(default=os.getenv("DATABASE_URL", "sqlite:///./coworking.db"))
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql+asyncpg://coworking_user:admin@localhost:5432/coworking_db")
 
     # Настройки безопасности
-    SECRET_KEY: str = Field(default=os.getenv("SECRET_KEY", "your-secret-key-for-development"))
+    SECRET_KEY: str = os.getenv("SECRET_KEY", "your-secret-key-for-development")
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
     # Настройки приложения
     APP_NAME: str = "Coworking Management System"
-    ADMIN_EMAIL: str = Field(default=os.getenv("ADMIN_EMAIL", "admin@example.com"))
-    ADMIN_PASSWORD: str = Field(default=os.getenv("ADMIN_PASSWORD", "admin"))
+    ADMIN_EMAIL: str = os.getenv("ADMIN_EMAIL", "admin@example.com")
+    ADMIN_PASSWORD: str = os.getenv("ADMIN_PASSWORD", "admin")
 
-    model_config = {
-        "env_file": ".env",
-        "extra": "ignore"
-    }
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore"
+    )
 
 settings = Settings()
